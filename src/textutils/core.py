@@ -27,4 +27,4 @@ def truncate(s: str, n: int, suffix: str = "\u2026") -> str:
 
 def word_count(s: str) -> int:
     """Count whitespace-separated tokens in s."""
-    raise NotImplementedError
+    return len(s.split())

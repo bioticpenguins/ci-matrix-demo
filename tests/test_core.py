@@ -53,4 +53,17 @@ class TestTruncate:
 
 
 class TestWordCount:
-    pass
+    def test_basic(self) -> None:
+        assert word_count("hello world") == 2
+
+    def test_extra_whitespace(self) -> None:
+        assert word_count("  hello   world  ") == 2
+
+    def test_single_word(self) -> None:
+        assert word_count("hello") == 1
+
+    def test_empty_string(self) -> None:
+        assert word_count("") == 0
+
+    def test_tabs_and_newlines(self) -> None:
+        assert word_count("one\ttwo\nthree") == 3
