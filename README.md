@@ -32,10 +32,10 @@ it executes once — linting the same code eight times adds no signal.
 Runs pytest across four Python versions (3.11, 3.12, 3.13, 3.14) on
 ubuntu-latest and windows-latest — eight parallel jobs.
 
-**Why those Python versions?** The package declares `requires-python = ">=3.13"`,
-but the matrix tests 3.11 and 3.12 as well. Testing below the declared floor
-catches accidental incompatibilities early, so lowering the floor later doesn't
-require a surprise debugging session.
+**Why those Python versions?** The package declares `requires-python = ">=3.11"`,
+matching the oldest version in the matrix. Testing the full 3.11–3.14 range
+catches regressions across the supported spectrum and gives early warning if a
+new Python release introduces a compatibility break.
 
 **Why no macOS?** Since 2025, `macos-latest` runs on Apple Silicon (arm64).
 For a pure-Python library with no native extensions, macOS adds no coverage

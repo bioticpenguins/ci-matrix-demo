@@ -1,7 +1,5 @@
 """Tests for textutils.core."""
 
-import pytest
-
 from textutils.core import slugify, truncate, word_count
 
 
