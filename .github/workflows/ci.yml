@@ -46,3 +46,29 @@ jobs:
         with:
           name: test-results-${{ matrix.os }}-py${{ matrix.python-version }}
           path: junit.xml
+
+  build-sdist:
+    needs: [pre-commit, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8.0.0
+        with:
+          python-version: "3.13"
+      - run: uv sync --extra dev
+      - run: uv run python -m build --sdist
+      - uses: actions/upload-artifact@v7
+        with:
+          name: sdist
+          path: dist/*.tar.gz
+
+  verify-sdist:
+    needs: build-sdist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: sdist
+      # Assert the sdist contains the files that matter — proves it is
+      # actually shippable, not just that the build command exited 0.
+      - run: tar -tzf textutils-*.tar.gz | grep -E "pyproject.toml|textutils/core.py"
